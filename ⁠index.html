@@ -3,194 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة تركي العالمية لمسارات الطيران | 3D Flight Globe Pro</title>
-    
+    <title>منصة تركي العالمية لمسارات الطيران</title>
     <script src="//unpkg.com/globe.gl"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #030508;
-            font-family: 'Noto Sans Arabic', sans-serif;
-            overflow: hidden;
-            color: #e2e8f0;
-            user-select: none;
-        }
-
-        /* لوحة التحكم الجانبية المتطورة */
-        #control-panel {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 350px;
-            background: rgba(6, 10, 18, 0.85);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 242, 255, 0.25);
-            border-radius: 20px;
-            padding: 24px;
-            z-index: 10;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 0 15px rgba(0, 242, 255, 0.05);
-        }
-
-        .brand-header {
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-
-        .brand-header h1 {
-            font-size: 20px;
-            margin: 0 0 5px 0;
-            color: #00f2ff;
-            font-weight: 700;
-            text-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
-        }
-
-        .brand-header p {
-            font-size: 12px;
-            margin: 0;
-            color: #94a3b8;
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1.5px;
-        }
-
-        /* هندسة محرك البحث الذكي */
-        .search-container {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .search-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-wrapper i {
-            position: absolute;
-            right: 12px;
-            color: #00f2ff;
-        }
-
-        #search-input {
-            width: 100%;
-            background: #0b111e;
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            background-color: #0b0b0e;
             color: #fff;
-            padding: 12px 40px 12px 12px;
-            border-radius: 10px;
-            font-family: 'Noto Sans Arabic', sans-serif;
-            font-size: 14px;
-            outline: none;
-            transition: all 0.3s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
         }
-
-        #search-input:focus {
-            border-color: #00f2ff;
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.25);
-        }
-
-        /* قائمة نتائج البحث المنسدلة */
-        #search-results {
-            position: absolute;
-            top: 50px;
-            left: 0;
-            width: 100%;
-            background: #090d16;
-            border: 1px solid rgba(0, 242, 255, 0.2);
-            border-radius: 10px;
-            max-height: 220px;
-            overflow-y: auto;
-            display: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
-            z-index: 12;
-        }
-
-        .result-item {
-            padding: 12px 15px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s;
-            border-bottom: 1px solid rgba(255,255,255,0.02);
-            text-align: right;
-        }
-
-        .result-item:hover {
-            background: rgba(0, 242, 255, 0.15);
-            color: #00f2ff;
-            padding-right: 20px;
-        }
-
-        /* لوحة البيانات الإحصائية الرقمية */
-        .stats-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 13.5px;
-        }
-
-        .stat-item:last-child { margin-bottom: 0; }
-        .stat-label { color: #94a3b8; }
-        .stat-value { color: #deff9a; font-weight: bold; font-family: 'Orbitron', sans-serif; }
-
-        /* أزرار التفاعل والنشر */
-        .share-btn {
-            width: 100%;
-            background: #ffffff;
-            color: #000000;
-            border: none;
-            padding: 14px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.3s;
-            text-decoration: none;
-            box-shadow: 0 4px 12px rgba(255,255,255,0.1);
-        }
-
-        .share-btn:hover {
-            background: #e2e8f0;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 242, 255, 0.3);
-        }
-
-        /* العلامة المائية الثابتة لحفظ حقوقك التنافسية */
-        #watermark {
-            position: absolute;
-            bottom: 25px;
-            left: 25px;
-            background: rgba(6, 10, 18, 0.7);
-            backdrop-filter: blur(8px);
-            padding: 12px 24px;
-            border-radius: 30px;
-            border: 1px solid rgba(0, 242, 255, 0.2);
-            font-size: 13px;
-            color: #94a3b8;
-            pointer-events: none;
-            z-index: 10;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-        #watermark span { color: #00f2ff; font-weight: bold; }
-
         #globeViz {
             width: 100vw;
             height: 100vh;
@@ -199,260 +22,255 @@
             left: 0;
             z-index: 1;
         }
-
-        /* تخصيص شريط التمرير (Scrollbar) لمحرك البحث */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
-        ::-webkit-scrollbar-thumb { background: rgba(0, 242, 255, 0.3); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 242, 255, 0.6); }
+        .ui-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            width: 320px;
+            background: rgba(15, 15, 26, 0.75);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        .brand {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #00ffcc;
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+        }
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        input:focus {
+            outline: none;
+            border-color: #00ffcc;
+        }
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #12121f;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 150px;
+            overflow-y: auto;
+            display: none;
+            z-index: 100;
+            border-radius: 0 0 6px 6px;
+        }
+        .search-results div {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .search-results div:hover {
+            background: rgba(0, 255, 204, 0.2);
+        }
+        .stats {
+            margin-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .stat-label { color: #8a8a9e; }
+        .stat-value { color: #00ffcc; font-weight: bold; }
+        .share-btn {
+            display: block;
+            text-align: center;
+            background: #1da1f2;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .share-btn:hover { background: #1a91da; }
     </style>
 </head>
 <body>
 
-    <div id="control-panel">
-        <div class="brand-header">
-            <h1>منصة مسارات الطيران العالمية</h1>
-            <p>SUPERVISED BY ALTURKITV</p>
-        </div>
+<div id="globeViz"></div>
 
-        <div class="search-container">
-            <label for="search-input"><i class="fa-solid fa-earth-americas"></i> ابحث عن الدولة لتوليد مساراتها حياً:</label>
-            <div class="search-wrapper" style="margin-top: 8px;">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="search-input" placeholder="اكتب اسم الدولة (مثال: السعودية)..." oninput="filterCountries(this.value)">
-            </div>
-            <div id="search-results"></div>
-        </div>
-
-        <div class="stats-box">
-            <div class="stat-item">
-                <span class="stat-label">الدولة النشطة حالياً:</span>
-                <span class="stat-value" id="current-country" style="color: #00f2ff;">المملكة العربية السعودية</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">المطارات المحورية المرصودة:</span>
-                <span class="stat-value" id="stat-hubs">2</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">روابط المسارات الجوية المباشرة:</span>
-                <span class="stat-value" id="stat-routes">12</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">الملاحة الفلكية:</span>
-                <span class="stat-value" style="color: #38bdf8;">Flat Surface Arcs</span>
-            </div>
-        </div>
-
-        <a href="#" id="x-share-link" target="_blank" class="share-btn">
-            <i class="fa-brands fa-x-twitter"></i> انشر الإحصائيات الفورية على X
-        </a>
+<div class="ui-container">
+    <div class="brand">منصة ALTURKITV لمسارات الطيران</div>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="ابحث عن دولة...">
+        <div id="searchResults" class="search-results"></div>
     </div>
-
-    <div id="watermark">
-        إشراف وتطوير عام: <span>تركي | @ALTURKITV</span>
+    <div class="stats">
+        <div class="stat-item">
+            <span class="stat-label">الدولة المختارة:</span>
+            <span id="current-country" class="stat-value">-</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">عدد المحاور:</span>
+            <span id="stat-hubs" class="stat-value">0</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">إجمالي المسارات:</span>
+            <span id="stat-routes" class="stat-value">0</span>
+        </div>
     </div>
+    <a id="x-share-link" class="share-btn" target="_blank">مشاركة على منصة X</a>
+</div>
 
-    <div id="globeViz"></div>
+<script>
+    // بيانات المطارات العالمية الافتراضية
+    const airports = {
+        'RUH': { lat: 24.957, lng: 46.698 }, 
+        'JED': { lat: 21.679, lng: 39.156 }, 
+        'DXB': { lat: 25.253, lng: 55.364 }, 
+        'LHR': { lat: 51.470, lng: -0.454 }, 
+        'JFK': { lat: 40.641, lng: -73.778 }, 
+        'CDG': { lat: 49.009, lng: 2.547 },  
+        'HND': { lat: 35.549, lng: 139.780 }, 
+        'CAI': { lat: 30.122, lng: 31.406 }  
+    };
 
-    <script>
-        // 1. قاعدة البيانات الموسعة والمحدثة جغرافيّاً (إحداثيات حقيقية)
-        const airports = {
-            'RUH': { name: 'الرياض', lat: 24.957, lng: 46.698 }, 'JED': { name: 'جدة', lat: 21.679, lng: 39.156 },
-            'DXB': { name: 'دبي', lat: 25.253, lng: 55.364 }, 'AUH': { name: 'أبوظبي', lat: 24.433, lng: 54.651 },
-            'DOH': { name: 'الدوحة', lat: 25.261, lng: 51.565 }, 'KWI': { name: 'الكويت', lat: 29.226, lng: 47.969 },
-            'MCT': { name: 'مسقط', lat: 23.593, lng: 58.281 }, 'CAI': { name: 'القاهرة', lat: 30.122, lng: 31.405 },
-            'CMN': { name: 'الدار البيضاء', lat: 33.367, lng: -7.590 }, 'AMM': { name: 'عمان', lat: 31.722, lng: 35.993 },
-            'JFK': { name: 'نيويورك', lat: 40.641, lng: -73.778 }, 'LAX': { name: 'لوس أنجلوس', lat: 33.941, lng: -118.408 },
-            'LHR': { name: 'لندن', lat: 51.470, lng: -0.454 }, 'CDG': { name: 'باريس', lat: 49.009, lng: 2.547 },
-            'FRA': { name: 'فرانكفورت', lat: 50.033, lng: 8.570 }, 'HND': { name: 'طوكيو', lat: 35.549, lng: 139.780 },
-            'PEK': { name: 'بكين', lat: 40.080, lng: 116.584 }, 'SIN': { name: 'سنغافورة', lat: 1.364, lng: 103.991 },
-            'IST': { name: 'إسطنبول', lat: 41.275, lng: 28.751 }, 'SYD': { name: 'سيدني', lat: -33.946, lng: 151.177 }
-        };
+    // بيانات الدول ومسارات الطيران
+    const countriesData = [
+        {
+            name: 'المملكة العربية السعودية',
+            code: 'SA',
+            routes: [
+                { from: 'RUH', to: 'LHR' },
+                { from: 'RUH', to: 'DXB' },
+                { from: 'RUH', to: 'JFK' },
+                { from: 'JED', to: 'CDG' },
+                { from: 'JED', to: 'CAI' }
+            ]
+        },
+        {
+            name: 'الإمارات العربية المتحدة',
+            code: 'AE',
+            routes: [
+                { from: 'DXB', to: 'LHR' },
+                { from: 'DXB', to: 'JFK' },
+                { from: 'DXB', to: 'HND' }
+            ]
+        },
+        {
+            name: 'المملكة المتحدة',
+            code: 'GB',
+            routes: [
+                { from: 'LHR', to: 'JFK' },
+                { from: 'LHR', to: 'CDG' }
+            ]
+        }
+    ];
 
-        // شبكة طيران ضخمة ومترابطة للدول المتاحة في محرك البحث
-        const countriesData = [
-            { code: 'SA', name: 'المملكة العربية السعودية', routes: [
-                { from: 'RUH', to: 'LHR' }, { from: 'RUH', to: 'JFK' }, { from: 'RUH', to: 'DXB' },
-                { from: 'RUH', to: 'HND' }, { from: 'RUH', to: 'CAI' }, { from: 'RUH', to: 'IST' },
-                { from: 'RUH', to: 'DOH' }, { from: 'RUH', to: 'CDG' },
-                { from: 'JED', to: 'CDG' }, { from: 'JED', to: 'FRA' }, { from: 'JED', to: 'CAI' }, { from: 'JED', to: 'MCT' }
-            ]},
-            { code: 'AE', name: 'الإمارات العربية المتحدة', routes: [
-                { from: 'DXB', to: 'JFK' }, { from: 'DXB', to: 'LHR' }, { from: 'DXB', to: 'HND' },
-                { from: 'DXB', to: 'RUH' }, { from: 'DXB', to: 'LAX' }, { from: 'DXB', to: 'SIN' },
-                { from: 'DXB', to: 'CAI' }, { from: 'DXB', to: 'SYD' }, { from: 'DXB', to: 'PEK' },
-                { from: 'AUH', to: 'LHR' }, { from: 'AUH', to: 'CDG' }, { from: 'AUH', to: 'FRA' }
-            ]},
-            { code: 'QA', name: 'دولة قطر', routes: [
-                { from: 'DOH', to: 'LHR' }, { from: 'DOH', to: 'JFK' }, { from: 'DOH', to: 'CDG' },
-                { from: 'DOH', to: 'RUH' }, { from: 'DOH', to: 'DXB' }, { from: 'DOH', to: 'HND' },
-                { from: 'DOH', to: 'SYD' }, { from: 'DOH', to: 'FRA' }
-            ]},
-            { code: 'EG', name: 'جمهورية مصر العربية', routes: [
-                { from: 'CAI', to: 'RUH' }, { from: 'CAI', to: 'JED' }, { from: 'CAI', to: 'DXB' },
-                { from: 'CAI', to: 'LHR' }, { from: 'CAI', to: 'CDG' }, { from: 'CAI', to: 'IST' },
-                { from: 'CAI', to: 'KWI' }, { from: 'CAI', to: 'DOH' }
-            ]},
-            { code: 'KW', name: 'دولة الكويت', routes: [
-                { from: 'KWI', to: 'RUH' }, { from: 'KWI', to: 'DXB' }, { from: 'KWI', to: 'LHR' },
-                { from: 'KWI', to: 'CAI' }, { from: 'KWI', to: 'IST' }, { from: 'KWI', to: 'FRA' }
-            ]},
-            { code: 'OM', name: 'سلطنة عمان', routes: [
-                { from: 'MCT', to: 'RUH' }, { from: 'MCT', to: 'DXB' }, { from: 'MCT', to: 'DOH' },
-                { from: 'MCT', to: 'LHR' }, { from: 'MCT', to: 'CAI' }, { from: 'MCT', to: 'SIN' }
-            ]},
-            { code: 'MA', name: 'المملكة المغربية', routes: [
-                { from: 'CMN', to: 'CDG' }, { from: 'CMN', to: 'JFK' }, { from: 'CMN', to: 'CAI' },
-                { from: 'CMN', to: 'LHR' }, { from: 'CMN', to: 'FRA' }, { from: 'CMN', to: 'DXB' }
-            ]},
-            { code: 'JO', name: 'المملكة الأردنية الهاشمية', routes: [
-                { from: 'AMM', to: 'RUH' }, { from: 'AMM', to: 'DXB' }, { from: 'AMM', to: 'CAI' },
-                { from: 'AMM', to: 'LHR' }, { from: 'AMM', to: 'IST' }, { from: 'AMM', to: 'CDG' }
-            ]},
-            { code: 'US', name: 'الولايات المتحدة الأمريكية', routes: [
-                { from: 'JFK', to: 'LHR' }, { from: 'JFK', to: 'CDG' }, { from: 'JFK', to: 'RUH' },
-                { from: 'JFK', to: 'DXB' }, { from: 'JFK', to: 'FRA' }, { from: 'LAX', to: 'HND' },
-                { from: 'LAX', to: 'SIN' }, { from: 'LAX', to: 'SYD' }, { from: 'LAX', to: 'PEK' }
-            ]},
-            { code: 'GB', name: 'المملكة المتحدة (بريطانيا)', routes: [
-                { from: 'LHR', to: 'JFK' }, { from: 'LHR', to: 'LAX' }, { from: 'LHR', to: 'RUH' },
-                { from: 'LHR', to: 'DXB' }, { from: 'LHR', to: 'HND' }, { from: 'LHR', to: 'SIN' },
-                { from: 'LHR', to: 'DOH' }, { from: 'LHR', to: 'CDG' }, { from: 'LHR', to: 'CAI' }
-            ]},
-            { code: 'FR', name: 'فرنسا', routes: [
-                { from: 'CDG', to: 'JFK' }, { from: 'CDG', to: 'LHR' }, { from: 'CDG', to: 'RUH' },
-                { from: 'CDG', to: 'JED' }, { from: 'CDG', to: 'DXB' }, { from: 'CDG', to: 'HND' },
-                { from: 'CDG', to: 'CMN' }, { from: 'CDG', to: 'SIN' }
-            ]},
-            { code: 'JP', name: 'اليابان', routes: [
-                { from: 'HND', to: 'LAX' }, { from: 'HND', to: 'JFK' }, { from: 'HND', to: 'SIN' },
-                { from: 'HND', to: 'LHR' }, { from: 'HND', to: 'RUH' }, { from: 'HND', to: 'DXB' },
-                { from: 'HND', to: 'PEK' }, { from: 'HND', to: 'SYD' }
-            ]}
-        ];
+    // تهيئة الكرة الأرضية ثلاثية الأبعاد
+    const globe = Globe()
+        (document.getElementById('globeViz'))
+        .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
+        .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
+        .arcColor(() => '#00ffcc')
+        .arcDashLength(0.4)
+        .arcDashGap(0.2)
+        .arcDashAnimateTime(1500)
+        .arcStroke(1.5);
 
-        // 2. تهيئة وتخصيص محرك الجرافيك ثلاثي الأبعاد (WebGL)
-        const globe = Globe()(document.getElementById('globeViz'))
-            .globeColor('#070b12')
-            .backgroundColor('#030508')
-            .showAtmosphere(true)
-            .atmosphereColor('#00f2ff')
-            .atmosphereThickness(0.12)
-            
-            // هندسة المسارات اللاصقة بالسطح (توجيهات تركي: دقة ملاحية مسطحة بدون انحناء بالوني)
-            .arcColor(() => '#00f2ff')
-            .arcAltitude(0.015) // تقليل الارتفاع لأقصى درجة ليصبح ملاصقاً تماماً وتظهر الخطوط حادة كشعاع الليزر
-            .arcStroke(1.3)
-            
-            // النبضات الضوئية السريعة لمحاكاة الطائرات الحية
-            .arcDashLength(0.35)
-            .arcDashGap(1.5)
-            .arcDashAnimationSpeed(0.05)
-            .arcDashAnimateOnLoad(true)
-            
-            // إعدادات لوحات المطارات الدولية المشعة
-            .labelsData(Object.keys(airports).map(key => ({ id: key, ...airports[key] })))
-            .labelLat(d => d.lat)
-            .labelLng(d => d.lng)
-            .labelText(d => d.id)
-            .labelSize(1.4)
-            .labelDotRadius(0.35)
-            .labelColor(() => '#deff9a')
-            .labelResolution(3);
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
 
-        // تحميل الخريطة السياسية التكتيكية وجلب الحدود من الـ CDN
-        fetch('//unpkg.com/geojson-places-data@1.0.2/data/countries.geojson')
-            .then(res => res.json())
-            .then(countries => {
-                globe.polygonsData(countries.features)
-                    .polygonCapColor(() => 'rgba(12, 20, 36, 0.45)') 
-                    .polygonSideColor(() => 'rgba(0,0,0,0)')
-                    .polygonStrokeColor(() => 'rgba(0, 242, 255, 0.22)'); // حدود واضحة ومضيئة
-            });
+    searchInput.addEventListener('input', (e) => {
+        const value = e.target.value.toLowerCase();
+        searchResults.innerHTML = '';
+        if (!value) {
+            searchResults.style.display = 'none';
+            return;
+        }
 
-        // 3. منطق تصفية وفلترة محرك البحث الذكي (Live Filter)
-        const searchInput = document.getElementById('search-input');
-        const searchResults = document.getElementById('search-results');
-
-        function filterCountries(query) {
-            if (!query) {
-                searchResults.style.display = 'none';
-                return;
-            }
-
-            const filtered = countriesData.filter(c => c.name.includes(query));
-            searchResults.innerHTML = '';
-
-            if (filtered.length > 0) {
-                filtered.forEach(country => {
-                    const div = document.createElement('div');
-                    div.className = 'result-item';
-                    div.innerText = country.name;
-                    div.onclick = () => {
-                        selectCountry(country);
-                        searchResults.style.display = 'none';
-                        searchInput.value = country.name;
-                    };
-                    searchResults.appendChild(div);
+        const filtered = countriesData.filter(c => c.name.toLowerCase().includes(value));
+        if (filtered.length > 0) {
+            filtered.forEach(country => {
+                const div = document.createElement('div');
+                div.innerText = country.name;
+                div.addEventListener('click', () => {
+                    selectCountry(country);
+                    searchResults.style.display = 'none';
+                    searchInput.value = country.name;
                 });
-                searchResults.style.display = 'block';
-            } else {
-                searchResults.style.display = 'none';
-            }
-        }
-
-        // إغلاق قائمة البحث عند الضغط في أي مكان خارجي لضمان سلامة الواجهة
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.search-container')) {
-                searchResults.style.display = 'none';
-            }
-        });
-
-        // 4. دالة معالجة وعرض مسارات الدولة المختارة وتحديث الواجهة الإحصائية
-        function selectCountry(country) {
-            const routes = country.routes;
-            
-            const formattedArcs = routes.map(route => {
-                const start = airports[route.from];
-                const end = airports[route.to];
-                return {
-                    startLat: start.lat,
-                    startLng: start.lng,
-                    endLat: end.lat,
-                    endLng: end.lng
-                };
+                searchResults.appendChild(div);
             });
+            searchResults.style.display = 'block';
+        } else {
+            searchResults.style.display = 'none';
+        }
+    });
 
-            // رسم المسارات الجديدة
-            globe.arcsData(formattedArcs);
+    // إغلاق قائمة البحث عند الضغط في أي مكان خارجي لضمان سلامة الواجهة
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-container')) {
+            searchResults.style.display = 'none';
+        }
+    });
 
-            // تدوير ذكي وانسيابي للكرة الأرضية نحو مطار الإقلاع الأساسي للدولة المختارة
-            if (routes.length > 0) {
-                const primaryHub = airports[routes[0].from];
-                globe.pointOfView({ lat: primaryHub.lat, lng: primaryHub.lng, alt: 1.75 }, 1600);
-            }
+    // دالة معالجة وعرض مسارات الدولة المختارة وتحديد الواجهة الإحصائية
+    function selectCountry(country) {
+        const routes = country.routes;
 
-            // تحديث لوحة التحكم رقمياً
-            document.getElementById('current-country').innerText = country.name;
-            const uniqueHubs = new Set(routes.map(r => r.from)).size;
-            document.getElementById('stat-hubs').innerText = uniqueHubs;
-            document.getElementById('stat-routes').innerText = routes.length;
+        const formattedArcs = routes.map(route => {
+            const start = airports[route.from];
+            const end = airports[route.to];
+            return {
+                startLat: start.lat,
+                startLng: start.lng,
+                endLat: end.lat,
+                endLng: end.lng
+            };
+        });
 
-            // هندسة نص التغريدة لضمان انتشارها الواسع وجلب حركة تفاعلية لحسابك
-            const tweetText = encodeURIComponent(`قمت للتو برصد شبكة مسارات الطيران الدولية الحية لـ (${country.name}) عبر منصة الطيران العالمية ثلاثية الأبعاد 3D. دقة ملاحية فائقة ومظهر مذهل بإشراف وتطوير المبدع تركي @ALTURKITV ✈️🔥🌐\nاستكشف دولتك الآن:`);
-            document.getElementById('x-share-link').href = `https://twitter.com/intent/tweet?text=${tweetText}`;
+        // رسم المسارات الجديدة
+        globe.arcsData(formattedArcs);
+
+        // تدوير ذكي وانسيابي للكرة الأرضية نحو مطار الإقلاع الأساسي للدولة المختارة
+        if (routes.length > 0) {
+            const primaryHub = airports[routes[0].from];
+            globe.pointOfView({ lat: primaryHub.lat, lng: primaryHub.lng, alt: 1.75 }, 1600);
         }
 
-        // تشغيل افتراضي فوري على "المملكة العربية السعودية" لمنح انطباع أول مبهر
-        setTimeout(() => {
-            const defaultCountry = countriesData.find(c => c.code === 'SA');
-            selectCountry(defaultCountry);
-        }, 1200);
+        // تحديد لوحة التحكم رقمياً
+        document.getElementById('current-country').innerText = country.name;
+        const uniqueHubs = new Set(routes.map(r => r.from)).size;
+        document.getElementById('stat-hubs').innerText = uniqueHubs;
+        document.getElementById('stat-routes').innerText = routes.length;
 
-        // إعادة ضبط الأبعاد ذاتياً ومقاومة التمدد الرسومي عند تغيير حجم شاشات الجوال أو الكمبيوتر
-        window.addEventListener('resize', () => {
-            globe.width(window.innerWidth).height(window.innerHeight);
-        });
-    </script>
+        // هندسة نص التغريدة لضمان انتشارها الواسع وجلب حركة تفاعلية لحسابك
+        const tweetText = encodeURIComponent(`شاهدوا شبكة مسارات الطيران الدولية الحية لـ ${country.name} عبر منصة @ALTURKITV التفاعلية! ✈️🌍`);
+        document.getElementById('x-share-link').href = `https://twitter.com/intent/tweet?text=${tweetText}`;
+    }
+
+    // تفعيل افتراضي فوري على "المملكة العربية السعودية" لمنح انطباع أول مبهر
+    setTimeout(() => {
+        const defaultCountry = countriesData.find(c => c.code === 'SA');
+        selectCountry(defaultCountry);
+    }, 1200);
+
+    // إعادة ضبط الأبعاد دائماً ومقاومة البعد الرسومي عند تغيير حجم شاشات الجوال أو الكمبيوتر
+    window.addEventListener('resize', () => {
+        globe.width(window.innerWidth).height(window.innerHeight);
+    });
+</script>
 </body>
-</html>
+</html> 
